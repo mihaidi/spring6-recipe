@@ -1,0 +1,1 @@
+Repo to experiment while reading Spring 6 Recipes by Marten Deinum
