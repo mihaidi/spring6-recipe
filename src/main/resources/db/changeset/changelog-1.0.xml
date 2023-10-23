@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="Mihai">
+        <createTable tableName="BOOK">
+            <column name="ISBN" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="BOOK_NAME" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PRICE" type="int"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Mihai">
+        <createTable tableName="BOOK_STOCK">
+            <column name="ISBN" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="STOCK" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Mihai">
+        <createTable tableName="ACCOUNT">
+            <column name="USERNAME" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="BALANCE" type="int">
+                <constraints nullable="false"
+                             checkConstraint="BALANCE >= 0"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="Mihai">
+
+        <sql>
+           <![CDATA[
+            ALTER TABLE BOOK_STOCK
+                ADD CONSTRAINT STOCK_CONSTRAINT CHECK ( STOCK >= 0 );
+            ]]>
+        </sql>
+
+        <sql>
+           <![CDATA[
+            ALTER TABLE ACCOUNT
+                ADD CONSTRAINT ACCOUNT_BALANCE_CONSTRAINT CHECK ( BALANCE >= 0 );
+            ]]>
+        </sql>
+
+
+        <insert tableName="BOOK">
+            <column name="ISBN" value="0001"/>
+            <column name="BOOK_NAME" value="The First Book"/>
+            <column name="PRICE" value="30"/>
+        </insert>
+
+        <insert tableName="BOOK_STOCK">
+            <column name="ISBN" value="0001"/>
+            <column name="STOCK" value="10"/>
+        </insert>
+
+        <insert tableName="ACCOUNT">
+            <column name="USERNAME" value="user1"/>
+            <column name="BALANCE" value="20"/>
+        </insert>
+    </changeSet>
+
+
+    <!-- Other change sets for this changelog file -->
+
+</databaseChangeLog>
